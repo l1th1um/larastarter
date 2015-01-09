@@ -26,3 +26,14 @@ Route::post('users/forgot_password',        'UserController@do_forgot_password')
 Route::get( 'users/reset_password/{token}', 'UserController@reset_password');
 Route::post('users/reset_password',         'UserController@do_reset_password');
 Route::get( 'users/logout',                 'UserController@logout');
+
+Route::get('dashboard/login', array('as' => 'BackendLogin', 'uses' => 'AdminDashboardController@showLogin'));
+
+Route::group(array('before' => 'auth'), function () {
+    Route::get('dashboard', array('as' => 'BackendHome', 'uses' => 'AdminDashboardController@dashboard'));    
+    
+    Route::group(array('prefix' => 'dashboard'), function()   
+    {
+    	Route::post('users',	'UserController@store');
+    });
+});

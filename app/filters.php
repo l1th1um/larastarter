@@ -37,16 +37,16 @@ Route::filter('auth', function()
 {
 	if (Auth::guest())
 	{
-		if (Request::ajax())
-		{
-			return Response::make('Unauthorized', 401);
-		}
-		else
-		{
-			return Redirect::guest('login');
-		}
+		return Redirect::guest('users/login');		
 	}
 });
+
+/*Route::filter('auth', function()
+{
+    if (!Sentry::check()) {
+        return Redirect::guest('dashboard/login')->with('errorMessage', 'Please Login First');
+    }    
+});    */
 
 
 Route::filter('auth.basic', function()
